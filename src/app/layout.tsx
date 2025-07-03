@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Roboto, JetBrains_Mono } from '@next/font/google';
+import { Roboto, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
 const roboto = Roboto({
