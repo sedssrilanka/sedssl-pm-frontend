@@ -42,12 +42,13 @@ pnpm dev
 
 ## Scripts
 
-| Script       | Description              |
-| ------------ | ------------------------ |
-| `pnpm dev`   | Start the dev server     |
-| `pnpm build` | Build the production app |
-| `pnpm start` | Start production server  |
-| `pnpm lint`  | Run ESLint               |
+| Script        | Description              |
+| ------------- | ------------------------ |
+| `pnpm dev`    | Start the dev server     |
+| `pnpm build`  | Build the production app |
+| `pnpm start`  | Start production server  |
+| `pnpm lint`   | Run ESLint               |
+| `pnpm format` | Run Code Format          |
 
 ---
 
