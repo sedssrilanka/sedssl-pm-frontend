@@ -12,6 +12,10 @@ const config: Config = {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
       },
+      fontFamily: {
+        roboto: ['var(--font-roboto)'],
+        mono: ['var(--font-jetbrains-mono)', 'monospace'],
+      },
     },
   },
   plugins: [],
