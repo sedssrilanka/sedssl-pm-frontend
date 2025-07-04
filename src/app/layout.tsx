@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { Roboto, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { SiteHeader } from '@/components/site-header';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
 
 const roboto = Roboto({
@@ -32,10 +33,10 @@ export default function RootLayout({
       <body className={`${roboto.variable} ${jetbrainsMono.variable} antialiased`}>
         <SidebarProvider>
           <AppSidebar />
-          <main>
-            <SidebarTrigger />
-            {children}
-          </main>
+          <SidebarInset>
+            <SiteHeader />
+            <div className="flex flex-1 flex-col">{children}</div>
+          </SidebarInset>
         </SidebarProvider>
       </body>
     </html>
