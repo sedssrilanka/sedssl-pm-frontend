@@ -1,5 +1,3 @@
-import { AlarmClockCheck, Lightbulb, NotebookPen, ScrollText } from 'lucide-react';
-
 import {
   Sidebar,
   SidebarContent,
@@ -11,39 +9,37 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-// Menu items.
-const items = [
-  {
-    title: 'Proposals',
-    url: '#',
-    icon: Lightbulb,
-  },
-  {
-    title: 'Projects',
-    url: '#',
-    icon: NotebookPen,
-  },
-  {
-    title: 'My Tasks',
-    url: '#',
-    icon: AlarmClockCheck,
-  },
-  {
-    title: 'Reports',
-    url: '#',
-    icon: ScrollText,
-  },
-];
+import { projectsItems, membersItems } from '@/data/menu-items';
+import { Separator } from './ui/separator';
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Projects</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {projectsItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <Separator />
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Members</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {membersItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
