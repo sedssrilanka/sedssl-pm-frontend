@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Roboto, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/app-sidebar';
+
 const roboto = Roboto({
   weight: '400',
   subsets: ['latin'],
@@ -26,7 +29,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} ${jetbrainsMono.variable} antialiased`}>{children}</body>
+      <body className={`${roboto.variable} ${jetbrainsMono.variable} antialiased`}>
+        <SidebarProvider>
+          <AppSidebar />
+          <main>
+            <SidebarTrigger />
+            {children}
+          </main>
+        </SidebarProvider>
+      </body>
     </html>
   );
 }
