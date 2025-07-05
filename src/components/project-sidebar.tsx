@@ -32,7 +32,7 @@ const data = {
 
 export function ProjectSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className="border-r-0" {...props} collapsible="none">
+    <Sidebar className=" bg-white" {...props} collapsible="none">
       <SidebarHeader></SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
