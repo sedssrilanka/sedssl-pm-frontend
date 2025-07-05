@@ -19,6 +19,7 @@ export const projectsItems = [
     title: 'Projects',
     url: '#',
     icon: NotebookPen,
+    isActive: true,
   },
   {
     title: 'My Tasks',

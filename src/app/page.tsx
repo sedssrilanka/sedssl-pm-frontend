@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button';
+import { ProjectSidebar } from '@/components/project-sidebar';
 
 export default function Home() {
   return (
     <div>
-      <Button>Hello</Button>
+      <ProjectSidebar />
     </div>
   );
 }
