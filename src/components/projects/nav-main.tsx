@@ -24,7 +24,7 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
-      isActive?: true;
+      isActive?: boolean;
       color?: string;
     }[];
   }[];
