@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-      
+
       - name: Build OpenNext
         run: pnpm run build-open
 
@@ -57,6 +57,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Build OpenNext
+        run: pnpm run build-open
 
       - name: Deploy with Wrangler
         uses: cloudflare/wrangler-action@v3
