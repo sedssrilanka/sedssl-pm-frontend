@@ -24,6 +24,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+      
+      - name: Build OpenNext
+        run: pnpm run build-open
 
       - name: Lint code
         run: pnpm lint
