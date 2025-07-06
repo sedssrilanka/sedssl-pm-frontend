@@ -11,6 +11,7 @@ export function ThemeToggle() {
 
   React.useEffect(() => {
     setChecked(resolvedTheme === 'dark');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleToggle = () => {

@@ -9,6 +9,7 @@ import {
   KanbanHeader,
   KanbanProvider,
 } from '@/components/ui/kanban';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export default function Home() {
   const handleDragEnd = (event: DragEndEvent) => {
@@ -44,6 +45,22 @@ export default function Home() {
                     Lorem ipsum dolor sit amet, libre unst consectetur adispicing elit. Lorem ipsum
                     dolor sit amet, libre unst consectetur adispicing elit.
                   </p>
+                  <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+                    <Avatar>
+                      <AvatarImage
+                        src="https://avatars.githubusercontent.com/u/48531182"
+                        alt="@mayura-andrew"
+                      />
+                      <AvatarFallback>MA</AvatarFallback>
+                    </Avatar>
+                    <Avatar>
+                      <AvatarImage
+                        src="https://avatars.githubusercontent.com/u/100839102"
+                        alt="@thawshi-srikanth"
+                      />
+                      <AvatarFallback>TS</AvatarFallback>
+                    </Avatar>
+                  </div>
                 </div>
               </KanbanCard>
               <KanbanCard
