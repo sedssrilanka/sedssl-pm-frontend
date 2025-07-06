@@ -34,7 +34,7 @@ export const KanbanBoard = ({ id, children, className }: KanbanBoardProps) => {
   return (
     <div
       className={cn(
-        'flex h-full min-h-40 flex-col gap-2 rounded-md  p-2 text-xs  transition-all',
+        'flex h-full min-h-40  max-w-[20rem] flex-col gap-2 rounded-md  p-2 text-xs  transition-all',
         className
       )}
       ref={setNodeRef}
@@ -59,9 +59,11 @@ export const KanbanCard = ({ id, name, index, parent, children, className }: Kan
 
   return (
     <Card
-      className={cn('rounded-md p-3 shadow-sm', isDragging && 'cursor-grabbing', className)}
+      className={cn('rounded-md p-3 shadow-sm ', isDragging && 'cursor-grabbing', className)}
       style={{
-        transform: transform ? `translateX(${transform.x}px) translateY(${transform.y}px)` : 'none',
+        transform: transform
+          ? `translateX(${transform.x}px) translateY(${transform.y}px) rotate(${isDragging ? '10deg' : '0deg'})`
+          : 'none',
       }}
       {...listeners}
       {...attributes}
