@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <div className=" flex">
       <ProjectSidebar />
-      <div className=" flex w-full p-5">
+      <div className=" flex w-full overflow-x-scroll p-5">
         <KanbanProvider onDragEnd={handleDragEnd}>
           <KanbanBoard key="draft" id="draft">
             <KanbanHeader>
