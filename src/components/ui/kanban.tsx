@@ -34,7 +34,7 @@ export const KanbanBoard = ({ id, children, className }: KanbanBoardProps) => {
   return (
     <div
       className={cn(
-        'flex h-full min-h-40  max-w-[20rem] flex-col gap-2 rounded-md  p-2 text-xs  transition-all',
+        'flex max-w-[20rem] flex-col h-fit gap-2 rounded-md  p-2 text-xs  transition-all',
         className
       )}
       ref={setNodeRef}
@@ -62,7 +62,7 @@ export const KanbanCard = ({ id, name, index, parent, children, className }: Kan
       className={cn('rounded-md p-3 shadow-sm ', isDragging && 'cursor-grabbing', className)}
       style={{
         transform: transform
-          ? `translateX(${transform.x}px) translateY(${transform.y}px) rotate(${isDragging ? '10deg' : '0deg'})`
+          ? `translateX(${transform.x}px) translateY(${transform.y}px) rotate(${isDragging ? '-10deg' : '0deg'})`
           : 'none',
       }}
       {...listeners}
@@ -94,6 +94,26 @@ export type KanbanHeaderProps =
     };
 
 export const KanbanHeader = (props: KanbanHeaderProps) =>
+  'children' in props ? (
+    props.children
+  ) : (
+    <div className={cn('flex shrink-0 items-center gap-2', props.className)}>
+      <div className="h-2 w-2 rounded-full" style={{ backgroundColor: props.color }} />
+      <p className="m-0 font-semibold text-sm">{props.name}</p>
+    </div>
+  );
+
+export type KanbanFooterProps =
+  | {
+      children: ReactNode;
+    }
+  | {
+      name: Status['name'];
+      color: Status['color'];
+      className?: string;
+    };
+
+export const KanbanFooter = (props: KanbanHeaderProps) =>
   'children' in props ? (
     props.children
   ) : (

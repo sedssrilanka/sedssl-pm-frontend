@@ -6,10 +6,13 @@ import {
   KanbanBoard,
   KanbanCard,
   KanbanCards,
+  KanbanFooter,
   KanbanHeader,
   KanbanProvider,
 } from '@/components/ui/kanban';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { MessagesSquare, PlusCircle, SquareCheck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   const handleDragEnd = (event: DragEndEvent) => {
@@ -19,7 +22,7 @@ export default function Home() {
   return (
     <div className=" flex">
       <ProjectSidebar />
-      <div className=" flex w-full">
+      <div className=" flex w-full p-5">
         <KanbanProvider onDragEnd={handleDragEnd}>
           <KanbanBoard key="draft" id="draft">
             <KanbanHeader>
@@ -41,25 +44,38 @@ export default function Home() {
                     <KanbanBadge>Important</KanbanBadge>
                   </div>
                   <p className="m-0 flex-1 font-semibold text-lg">Task #0001</p>
-                  <p className="mt-5 text-muted-foreground text-sm">
+                  <p className="mt-3 text-muted-foreground text-sm">
                     Lorem ipsum dolor sit amet, libre unst consectetur adispicing elit. Lorem ipsum
                     dolor sit amet, libre unst consectetur adispicing elit.
                   </p>
-                  <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
-                    <Avatar>
-                      <AvatarImage
-                        src="https://avatars.githubusercontent.com/u/48531182"
-                        alt="@mayura-andrew"
-                      />
-                      <AvatarFallback>MA</AvatarFallback>
-                    </Avatar>
-                    <Avatar>
-                      <AvatarImage
-                        src="https://avatars.githubusercontent.com/u/100839102"
-                        alt="@thawshi-srikanth"
-                      />
-                      <AvatarFallback>TS</AvatarFallback>
-                    </Avatar>
+
+                  <div className=" flex items-center justify-between mt-5">
+                    <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+                      <Avatar>
+                        <AvatarImage
+                          src="https://avatars.githubusercontent.com/u/48531182"
+                          alt="@mayura-andrew"
+                        />
+                        <AvatarFallback>MA</AvatarFallback>
+                      </Avatar>
+                      <Avatar>
+                        <AvatarImage
+                          src="https://avatars.githubusercontent.com/u/100839102"
+                          alt="@thawshi-srikanth"
+                        />
+                        <AvatarFallback>TS</AvatarFallback>
+                      </Avatar>
+                    </div>
+                    <div className=" flex item-center gap-2">
+                      <div className=" flex flex-wrap">
+                        <MessagesSquare width={20} height={20} className=" text-primary" />
+                        <KanbanBadge variant={'ghost'}>11</KanbanBadge>
+                      </div>
+                      <div className=" flex flex-wrap">
+                        <SquareCheck width={20} height={20} className=" text-primary" />
+                        <KanbanBadge variant={'ghost'}>88+</KanbanBadge>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </KanbanCard>
@@ -80,6 +96,11 @@ export default function Home() {
                 </div>
               </KanbanCard>
             </KanbanCards>
+            <KanbanFooter>
+              <Button variant={'secondary'}>
+                <PlusCircle></PlusCircle>
+              </Button>
+            </KanbanFooter>
           </KanbanBoard>
         </KanbanProvider>
       </div>
