@@ -5,6 +5,7 @@ import './globals.css';
 import { SiteHeader } from '@/components/site-header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
+import { ThemeProvider } from '@/components/theme-provider';
 
 const roboto = Roboto({
   weight: '400',
@@ -31,13 +32,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} ${jetbrainsMono.variable} antialiased`}>
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
-            <SiteHeader />
-            <div className="flex flex-1 flex-col">{children}</div>
-          </SidebarInset>
-        </SidebarProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <SiteHeader />
+              <div className="flex flex-1 flex-col">{children}</div>
+            </SidebarInset>
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
