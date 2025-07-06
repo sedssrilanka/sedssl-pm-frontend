@@ -94,7 +94,7 @@ const data: { navMain: NavMainItem[] } = {
 
 export function ProjectSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className=" bg-white" {...props} collapsible="none">
+    <Sidebar className=" min-h-screen" {...props} collapsible="none">
       <SidebarHeader></SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
