@@ -1,25 +1,15 @@
 import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '../ui/button';
 
 export function SiteHeader() {
   return (
     <header className=" sticky top-0 z-50 bg-background group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 w-full shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear justify-between">
       <div className="flex items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        <a href="#" className="inline-flex items-center gap-2">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 26 26"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M26 13C26 20.1797 20.1797 26 13 26C5.8203 26 0 20.1797 0 13C0 5.8203 5.8203 0 13 0C20.1797 0 26 5.8203 26 13ZM3.80036 13C3.80036 18.0808 7.91918 22.1996 13 22.1996C18.0808 22.1996 22.1996 18.0808 22.1996 13C22.1996 7.91918 18.0808 3.80036 13 3.80036C7.91918 3.80036 3.80036 7.91918 3.80036 13Z"
-              fill="#F97316"
-            />
-          </svg>
-
-          <span className="font-bold text-base">SEDS SL.</span>
-        </a>
+        <Button variant={'ghost'}>
+          <ArrowLeft />
+        </Button>
+        Member Registration
       </div>
 
       <div className="flex items-center gap-1 px-4 lg:gap-2 lg:px-6">
