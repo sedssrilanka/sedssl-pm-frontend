@@ -10,10 +10,19 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 
+import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/ui/dropzone';
+import { useState } from 'react';
+
 export function MembershipRegistrationForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLFormElement>) {
+  const [files, setFiles] = useState<File[] | undefined>();
+
+  const handleDrop = (files: File[]) => {
+    console.log(files);
+    setFiles(files);
+  };
   return (
     <form className={`flex flex-col gap-6 ${className}`} {...props}>
       <div className="flex flex-col gap-1">
@@ -59,7 +68,18 @@ export function MembershipRegistrationForm({
 
       <div className="grid gap-1.5">
         <Label htmlFor="cv">Upload CV / Resume</Label>
-        <Input id="cv" type="file" accept=".pdf,.doc,.docx" required />
+        <Dropzone
+          maxSize={1024 * 1024 * 10}
+          minSize={1024}
+          maxFiles={10}
+          accept={{ 'pdf/*': [] }}
+          onDrop={handleDrop}
+          src={files}
+          onError={console.error}
+        >
+          <DropzoneEmptyState />
+          <DropzoneContent />
+        </Dropzone>
       </div>
     </form>
   );
