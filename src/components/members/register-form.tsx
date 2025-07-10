@@ -12,8 +12,10 @@ import {
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/ui/dropzone';
 import { useState } from 'react';
 import { Button } from '../ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import DatePicker from '../ui/date-picker';
+import { PhoneInput } from '../ui/phone-input';
+import { Checkbox } from '../ui/checkbox';
 
 export function MembershipRegistrationForm({
   className,
@@ -27,7 +29,7 @@ export function MembershipRegistrationForm({
   };
 
   return (
-    <form className={`space-y-8 ${className}`} {...props}>
+    <form className={`space-y-5 ${className}`} {...props}>
       <div>
         <Button variant={'link'} className=" p-0">
           <ArrowLeft />
@@ -52,7 +54,7 @@ export function MembershipRegistrationForm({
 
         <div className="md:col-span-2 grid gap-1.5">
           <Label htmlFor="phone">Phone Number</Label>
-          <Input id="phone" type="tel" placeholder="+94771234567" required />
+          <PhoneInput defaultCountry="LK" />
         </div>
 
         <div className="grid gap-1.5">
@@ -89,6 +91,18 @@ export function MembershipRegistrationForm({
           <DropzoneEmptyState />
           <DropzoneContent />
         </Dropzone>
+      </div>
+
+      <div className="flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+          <Checkbox id="terms" />
+          <Label htmlFor="terms">Accept terms and conditions</Label>
+        </div>
+
+        <Button type="submit" variant={'link'} className=" p-0">
+          Next Step
+          <ArrowRight />
+        </Button>
       </div>
     </form>
   );
