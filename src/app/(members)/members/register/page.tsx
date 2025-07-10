@@ -29,7 +29,7 @@ export default function MemberRegistration() {
       </div>
       <div className="flex flex-col gap-4">
         <SiteHeader />
-        <div className="flex flex-1  h-full px-6 md:px-10">
+        <div className="flex flex-1 items-center justify-center  h-full px-6 md:px-10">
           <div className="w-full max-w-md">
             <MembershipRegistrationForm />
           </div>
