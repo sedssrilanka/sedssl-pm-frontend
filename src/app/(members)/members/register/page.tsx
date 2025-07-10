@@ -3,8 +3,8 @@ import { SiteHeader } from '@/components/members/site-header';
 import { Meteors } from '@/components/ui/meteors';
 export default function MemberRegistration() {
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="bg-muted relative hidden lg:block">
+    <div className="grid min-h-svh lg:grid-cols-3">
+      <div className="bg-muted relative hidden lg:block lg:col-span-2">
         <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden">
           <Meteors number={30} />
           <div className="flex justify-center gap-2 md:justify-start">
@@ -29,7 +29,7 @@ export default function MemberRegistration() {
       </div>
       <div className="flex flex-col gap-4">
         <SiteHeader />
-        <div className="flex flex-1  h-full px-6 md:px-10">
+        <div className="flex items-start justify-center h-full px-6 md:px-10">
           <div className="w-full max-w-md">
             <MembershipRegistrationForm />
           </div>

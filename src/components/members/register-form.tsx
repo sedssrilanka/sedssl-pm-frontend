@@ -9,9 +9,13 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select';
-
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/ui/dropzone';
 import { useState } from 'react';
+import { Button } from '../ui/button';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import DatePicker from '../ui/date-picker';
+import { PhoneInput } from '../ui/phone-input';
+import { Checkbox } from '../ui/checkbox';
 
 export function MembershipRegistrationForm({
   className,
@@ -23,47 +27,54 @@ export function MembershipRegistrationForm({
     console.log(files);
     setFiles(files);
   };
+
   return (
-    <form className={`flex flex-col gap-6 ${className}`} {...props}>
-      <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold">Step 1: Personal Information</h1>
+    <form className={`space-y-5 ${className}`} {...props}>
+      <div>
+        <Button variant={'link'} className=" p-0">
+          <ArrowLeft />
+          Login
+        </Button>
+        <h1 className="text-2xl font-bold mb-1">Personal Information</h1>
         <p className="text-sm text-muted-foreground">
           Tell us about yourself to begin your application.
         </p>
       </div>
 
-      <div className="grid gap-1.5">
-        <Label htmlFor="initials">Name with Initials</Label>
-        <Input id="initials" placeholder="S. R. Perera" required />
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid gap-1.5">
+          <Label htmlFor="initials">Name with Initials</Label>
+          <Input id="initials" placeholder="S. R. Perera" required />
+        </div>
 
-      <div className="grid gap-1.5">
-        <Label htmlFor="fullName">Full Name</Label>
-        <Input id="fullName" placeholder="Sahan Ramesh Perera" required />
-      </div>
+        <div className="grid gap-1.5">
+          <Label htmlFor="fullName">Full Name</Label>
+          <Input id="fullName" placeholder="Sahan Ramesh Perera" required />
+        </div>
 
-      <div className="grid gap-1.5">
-        <Label htmlFor="phone">Phone Number</Label>
-        <Input id="phone" type="tel" placeholder="+94771234567" required />
-      </div>
+        <div className="md:col-span-2 grid gap-1.5">
+          <Label htmlFor="phone">Phone Number</Label>
+          <PhoneInput defaultCountry="LK" />
+        </div>
 
-      <div className="grid gap-1.5">
-        <Label htmlFor="gender">Gender</Label>
-        <Select required>
-          <SelectTrigger id="gender">
-            <SelectValue placeholder="Select your gender" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="male">Male</SelectItem>
-            <SelectItem value="female">Female</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+        <div className="grid gap-1.5">
+          <Label htmlFor="gender">Gender</Label>
+          <Select required>
+            <SelectTrigger id="gender">
+              <SelectValue placeholder="Select your gender" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="male">Male</SelectItem>
+              <SelectItem value="female">Female</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div className="grid gap-1.5">
-        <Label htmlFor="dob">Date of Birth</Label>
-        <Input id="dob" type="date" required />
+        <div className="grid gap-1.5 ">
+          <Label htmlFor="dob">Date of Birth</Label>
+          <DatePicker />
+        </div>
       </div>
 
       <div className="grid gap-1.5">
@@ -71,8 +82,8 @@ export function MembershipRegistrationForm({
         <Dropzone
           maxSize={1024 * 1024 * 10}
           minSize={1024}
-          maxFiles={10}
-          accept={{ 'pdf/*': [] }}
+          maxFiles={1}
+          accept={{ 'application/pdf': [] }}
           onDrop={handleDrop}
           src={files}
           onError={console.error}
@@ -80,6 +91,18 @@ export function MembershipRegistrationForm({
           <DropzoneEmptyState />
           <DropzoneContent />
         </Dropzone>
+      </div>
+
+      <div className="flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+          <Checkbox id="terms" />
+          <Label htmlFor="terms">Accept terms and conditions</Label>
+        </div>
+
+        <Button type="submit" variant={'link'} className=" p-0">
+          Next Step
+          <ArrowRight />
+        </Button>
       </div>
     </form>
   );
