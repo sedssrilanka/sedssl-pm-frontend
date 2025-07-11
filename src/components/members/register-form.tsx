@@ -32,6 +32,8 @@ import { Calendar } from '../ui/calendar';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ArrowRight, CalendarIcon } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 // Schema
 const formSchema = z.object({
@@ -57,6 +59,8 @@ export function MembershipRegistrationForm({
 }: React.HTMLAttributes<HTMLFormElement>) {
   const [files, setFiles] = useState<File[] | undefined>();
 
+  const supabase = createClient();
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,10 +80,67 @@ export function MembershipRegistrationForm({
     form.setValue('cv', file);
   };
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log('Submitted values:', values);
-  };
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const {
+        initials,
+        fullName,
+        phone,
+        gender,
+        dob,
+        cv, // File
+      } = values;
 
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        throw new Error('User not authenticated');
+      }
+
+      // 2. Upload CV to Supabase Storage
+      const fileExt = cv.name.split('.').pop();
+      const filePath = `${user.id}/cv_${user.id}_${Date.now()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage.from('sedssl').upload(filePath, cv);
+
+      if (uploadError) {
+        throw new Error(`Failed to upload CV: ${uploadError.message}`);
+      }
+
+      // 3. Get public URL
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('cvs').getPublicUrl(filePath);
+
+      // 4. Insert membership into DB
+      const { error: insertError } = await supabase.from('memberships').insert({
+        user_id: user.id,
+        initials,
+        full_name: fullName,
+        phone,
+        gender,
+        dob,
+        cv_url: publicUrl,
+        status: 'pending',
+      });
+
+      if (insertError) {
+        throw new Error(`Failed to save membership: ${insertError.message}`);
+      }
+
+      //TODO show proper pop up
+
+      alert('Membership submitted successfully!');
+      router.push('/members');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.error(err);
+      alert(`Submission failed: ${err.message}`);
+    }
+  };
   return (
     <Form {...form}>
       <form className={`space-y-5 ${className}`} onSubmit={form.handleSubmit(onSubmit)} {...props}>

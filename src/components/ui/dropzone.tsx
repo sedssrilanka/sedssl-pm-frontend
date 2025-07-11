@@ -27,18 +27,12 @@ const renderBytes = (bytes: number) => {
   return `${size.toFixed(2)}${units[unitIndex]}`;
 };
 
-const DropzoneContext = createContext<DropzoneContextType | undefined>(
-  undefined
-);
+const DropzoneContext = createContext<DropzoneContextType | undefined>(undefined);
 
 export type DropzoneProps = Omit<DropzoneOptions, 'onDrop'> & {
   src?: File[];
   className?: string;
-  onDrop?: (
-    acceptedFiles: File[],
-    fileRejections: FileRejection[],
-    event: DropEvent
-  ) => void;
+  onDrop?: (acceptedFiles: File[], fileRejections: FileRejection[], event: DropEvent) => void;
   children?: ReactNode;
 };
 
@@ -136,9 +130,7 @@ export const DropzoneContent = ({ children }: DropzoneContentProps) => {
             )} and ${src.length - maxLabelItems} more`
           : new Intl.ListFormat('en').format(src.map((file) => file.name))}
       </p>
-      <p className="w-full text-muted-foreground text-xs">
-        Drag and drop or click to replace
-      </p>
+      <p className="w-full text-muted-foreground text-xs">Drag and drop or click to replace</p>
     </>
   );
 };
