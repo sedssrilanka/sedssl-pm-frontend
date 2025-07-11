@@ -19,6 +19,9 @@ import { Loader2 } from 'lucide-react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const signupSchema = z.object({
   email: z.email('Enter a valid email'),
@@ -28,6 +31,8 @@ const signupSchema = z.object({
 export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLFormElement>) {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -39,9 +44,22 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLForm
 
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
     setLoading(true);
-    console.log('Signup values:', values);
-    // handle form-based signup
-    setTimeout(() => setLoading(false), 1000); // simulate loading
+
+    const supabase = createClient();
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      });
+      if (error) throw error;
+      // Update this route to redirect to an authenticated route. The user already has an active session.
+      router.push('/projects');
+    } catch (error: unknown) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSocialLogin = (provider: 'google' | 'github') => {
@@ -139,6 +157,12 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLForm
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Login'}
         </Button>
+        <div className="text-muted-foreground flex justify-center gap-1 text-sm">
+          <p>Don&apos;t have an account?</p>
+          <Link href="/members/auth/sign-up" className="text-primary font-medium hover:underline">
+            Sign up
+          </Link>
+        </div>
       </form>
     </Form>
   );

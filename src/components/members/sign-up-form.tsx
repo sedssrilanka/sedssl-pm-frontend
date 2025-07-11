@@ -19,6 +19,8 @@ import { Loader2 } from 'lucide-react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 const signupSchema = z
   .object({
@@ -35,6 +37,8 @@ export function SignupForm({ className, ...props }: React.HTMLAttributes<HTMLFor
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -46,9 +50,25 @@ export function SignupForm({ className, ...props }: React.HTMLAttributes<HTMLFor
 
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
     setLoading(true);
-    console.log('Signup values:', values);
-    // handle form-based signup
-    setTimeout(() => setLoading(false), 1000); // simulate loading
+
+    const supabase = createClient();
+
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: values.email,
+        password: values.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/projects`,
+        },
+      });
+      if (error) throw error;
+      // Update this route to redirect to an authenticated route. The user already has an active session.
+      router.push('/projects');
+    } catch (error: unknown) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSocialLogin = (provider: 'google' | 'github') => {

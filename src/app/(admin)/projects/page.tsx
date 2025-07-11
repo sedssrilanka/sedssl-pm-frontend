@@ -1,4 +1,5 @@
-'use client';
+import { redirect } from 'next/navigation';
+
 import { ProjectSidebar } from '@/components/project-sidebar';
 import { KanbanBadge } from '@/components/ui/kanban-badge';
 import {
@@ -13,11 +14,19 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MessagesSquare, PlusCircle, SquareCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { createClient } from '@/lib/supabase/server';
 
-export default function Home() {
+export default async function Home() {
   const handleDragEnd = (event: DragEndEvent) => {
     console.log(event);
   };
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data?.user) {
+    redirect('/auth/login');
+  }
 
   return (
     <div className=" flex">
