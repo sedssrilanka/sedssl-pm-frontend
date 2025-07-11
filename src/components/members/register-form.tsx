@@ -131,8 +131,11 @@ export function MembershipRegistrationForm({
         throw new Error(`Failed to save membership: ${insertError.message}`);
       }
 
+      //TODO show proper pop up
+
       alert('Membership submitted successfully!');
       router.push('/members');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error(err);
       alert(`Submission failed: ${err.message}`);

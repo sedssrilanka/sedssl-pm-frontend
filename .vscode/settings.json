@@ -1,8 +1,5 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": [
-    "SEDS",
-    "supabase"
-  ]
+  "cSpell.words": ["SEDS", "supabase"]
 }
