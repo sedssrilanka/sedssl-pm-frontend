@@ -20,8 +20,8 @@ export default function RootLayout({
             <div className="flex justify-center gap-2 md:justify-start">
               <a href="#" className="inline-flex items-center gap-2">
                 <svg
-                  width="32"
-                  height="32"
+                  width="40"
+                  height="40"
                   viewBox="0 0 26 26"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ export default function RootLayout({
                   />
                 </svg>
 
-                <span className="font-bold text-base">SEDS SL.</span>
+                <span className="font-bold text-2xl">SEDS SL.</span>
               </a>
             </div>
           </div>

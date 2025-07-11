@@ -20,18 +20,12 @@ import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 
-const signupSchema = z
-  .object({
-    email: z.email('Enter a valid email'),
-    password: z.string().min(6, 'Password must be at least 6 characters'),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  });
+const signupSchema = z.object({
+  email: z.email('Enter a valid email'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+});
 
-export function SignupForm({ className, ...props }: React.HTMLAttributes<HTMLFormElement>) {
+export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLFormElement>) {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -40,7 +34,6 @@ export function SignupForm({ className, ...props }: React.HTMLAttributes<HTMLFor
     defaultValues: {
       email: '',
       password: '',
-      confirmPassword: '',
     },
   });
 
@@ -64,8 +57,8 @@ export function SignupForm({ className, ...props }: React.HTMLAttributes<HTMLFor
         {...props}
       >
         <div>
-          <h1 className="text-2xl font-bold mb-2">Create an Account</h1>
-          <p className="text-sm text-muted-foreground">Sign up to continue</p>
+          <h1 className="text-2xl font-bold mb-2">Sign in to Account</h1>
+          <p className="text-sm text-muted-foreground">Hello welcome back.</p>
         </div>
 
         {/* Social Auth */}
@@ -142,24 +135,9 @@ export function SignupForm({ className, ...props }: React.HTMLAttributes<HTMLFor
           )}
         />
 
-        {/* Confirm Password */}
-        <FormField
-          control={form.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         {/* Submit */}
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Sign Up'}
+          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Login'}
         </Button>
       </form>
     </Form>
