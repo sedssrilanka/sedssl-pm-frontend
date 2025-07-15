@@ -112,6 +112,8 @@ This document outlines the required modules for the SEDSSL membership and projec
 
 ## Hosting & Deployment
 
+![Hosting Structure](/hosting-structure.png)
+
 - ⬜ **Cloudflare Worker Setup**
   - API endpoints
   - Edge functions
