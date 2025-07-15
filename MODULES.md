@@ -13,6 +13,8 @@ This document outlines the required modules for the SEDSSL membership and projec
 - 🟩 **Authentication:** Supabase Auth (email/password, OAuth)
 - 🟩 **Deployment:** Cloudflare Pages/Workers
 
+![Architecture Diagram](/architecture.png)
+
 ---
 
 ## Core Modules
