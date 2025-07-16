@@ -19,11 +19,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
-const signupSchema = z.object({
-  email: z.email('Enter a valid email'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
+import { signupSchema } from '@/schema/zod/auth';
 
 const defaultValues = {
   email: '',
