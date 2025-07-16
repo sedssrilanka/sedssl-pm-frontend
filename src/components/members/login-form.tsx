@@ -19,7 +19,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { signupSchema } from '@/schema/zod/auth';
+import { loginSchema } from '@/schema/zod/auth';
 
 const defaultValues = {
   email: '',
@@ -51,12 +51,12 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLForm
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof signupSchema>>({
-    resolver: zodResolver(signupSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues,
   });
 
-  const onSubmit = async (values: z.infer<typeof signupSchema>) => {
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setLoading(true);
     const supabase = createClient();
     try {

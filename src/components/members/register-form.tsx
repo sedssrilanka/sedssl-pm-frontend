@@ -34,24 +34,7 @@ import { format } from 'date-fns';
 import { ArrowRight, CalendarIcon } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
-
-// Schema
-const formSchema = z.object({
-  initials: z.string().min(2, 'Required'),
-  fullName: z.string().min(2, 'Required'),
-  phone: z.string().min(10, 'Enter a valid phone number'),
-  gender: z.enum(['male', 'female', 'other']),
-  dob: z.date({
-    error: 'A date of birth is required.',
-  }),
-  terms: z.boolean().refine((val) => val === true, {
-    message: 'You must accept the terms and conditions',
-  }),
-  cv: z
-    .any()
-    .refine((file) => file instanceof File, 'CV is required')
-    .refine((file) => file?.type === 'application/pdf', 'Only PDF allowed'),
-});
+import { registrationFormSchema } from '@/schema/zod/auth';
 
 export function MembershipRegistrationForm({
   className,
@@ -61,8 +44,8 @@ export function MembershipRegistrationForm({
 
   const supabase = createClient();
   const router = useRouter();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof registrationFormSchema>>({
+    resolver: zodResolver(registrationFormSchema),
     defaultValues: {
       initials: '',
       fullName: '',
@@ -80,7 +63,7 @@ export function MembershipRegistrationForm({
     form.setValue('cv', file);
   };
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof registrationFormSchema>) => {
     try {
       const {
         initials,
