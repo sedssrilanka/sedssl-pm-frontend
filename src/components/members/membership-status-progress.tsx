@@ -12,18 +12,38 @@ import { statusSteps, STATUS_CONFIG } from '@/data/status-configs';
 import { cn } from '@/lib/utils';
 
 const LoadingState = () => (
-  <Card className="w-full mx-auto border-none">
-    <CardHeader className="space-y-6">
-      <Skeleton className="h-8 w-48" />
-      <Skeleton className="h-4 w-32" />
+  <Card className="w-full max-w-2xl mx-auto border-none">
+    <CardHeader className="space-y-8">
+      <div className="space-y-4">
+        <Skeleton className="h-8 w-60 rounded" />
+      </div>
+      <div className="space-y-4">
+        <div className="flex justify-between text-sm">
+          <Skeleton className="h-4 w-32 rounded" />
+          <Skeleton className="h-4 w-20 rounded" />
+        </div>
+        <Skeleton className="h-3 w-full rounded" />
+      </div>
     </CardHeader>
     <CardContent className="space-y-8">
-      {[1, 2, 3].map((i) => (
-        <div key={i} className="flex items-center space-x-6">
-          <Skeleton className="h-10 w-10 rounded-full" />
-          <div className="space-y-3 flex-1">
-            <Skeleton className="h-5 w-40" />
-            <Skeleton className="h-4 w-64" />
+      {statusSteps.map((_, idx) => (
+        <div key={idx} className="flex items-start gap-6">
+          <div className="flex flex-col items-center">
+            <Skeleton className="h-10 w-10 rounded-full" />
+
+            {idx < statusSteps.length - 1 && (
+              <div className="flex flex-col items-center">
+                <Skeleton className="w-0.5 h-12 mt-3 rounded" />
+              </div>
+            )}
+          </div>
+          <div className="flex-1 space-y-3 pb-6">
+            <div className="space-y-2">
+              <Skeleton className="h-6 w-40 rounded" />
+              <Skeleton className="h-4 w-64 rounded" />
+              <Skeleton className="h-4 w-40 rounded" />
+            </div>
+            {idx === 0 && <Skeleton className="h-6 w-24 rounded" />}
           </div>
         </div>
       ))}
