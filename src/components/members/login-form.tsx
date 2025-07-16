@@ -3,7 +3,6 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,48 +13,57 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-
-import { Loader2 } from 'lucide-react';
+import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { loginSchema } from '@/schema/zod/auth';
 
-const signupSchema = z.object({
-  email: z.email('Enter a valid email'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
+const defaultValues = {
+  email: '',
+  password: '',
+};
+
+const SocialButton = ({
+  icon: Icon,
+  children,
+  onClick,
+}: {
+  icon: React.ElementType;
+  children: React.ReactNode;
+  onClick: () => void;
+}) => (
+  <Button
+    type="button"
+    variant="outline"
+    className="w-full flex items-center justify-center gap-2"
+    onClick={onClick}
+  >
+    <Icon />
+    {children}
+  </Button>
+);
 
 export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLFormElement>) {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof signupSchema>>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+    defaultValues,
   });
 
-  const onSubmit = async (values: z.infer<typeof signupSchema>) => {
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setLoading(true);
-
     const supabase = createClient();
-
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: values.email,
-        password: values.password,
-      });
+      const { error } = await supabase.auth.signInWithPassword(values);
       if (error) throw error;
-      // Update this route to redirect to an authenticated route. The user already has an active session.
       router.push('/projects');
-    } catch (error: unknown) {
+    } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
@@ -64,13 +72,13 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLForm
 
   const handleSocialLogin = (provider: 'google' | 'github') => {
     console.log(`Sign in with ${provider}`);
-    // You can hook this into your auth system (e.g., Supabase, NextAuth)
+    // Integrate with your auth system here
   };
 
   return (
     <Form {...form}>
       <form
-        className={`space-y-6 max-w-md mx-auto ${className}`}
+        className={`space-y-6 max-w-md mx-auto ${className ?? ''}`}
         onSubmit={form.handleSubmit(onSubmit)}
         {...props}
       >
@@ -79,26 +87,13 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLForm
           <p className="text-sm text-muted-foreground">Hello welcome back.</p>
         </div>
 
-        {/* Social Auth */}
         <div className="space-y-3">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full flex items-center justify-center gap-2"
-            onClick={() => handleSocialLogin('google')}
-          >
-            <FaGoogle />
+          <SocialButton icon={FaGoogle} onClick={() => handleSocialLogin('google')}>
             Continue with Google
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full flex items-center justify-center gap-2"
-            onClick={() => handleSocialLogin('github')}
-          >
-            <FaGithub />
+          </SocialButton>
+          <SocialButton icon={FaGithub} onClick={() => handleSocialLogin('github')}>
             Continue with GitHub
-          </Button>
+          </SocialButton>
         </div>
 
         <div className="relative">
@@ -110,7 +105,6 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLForm
           </div>
         </div>
 
-        {/* Email */}
         <FormField
           control={form.control}
           name="email"
@@ -125,7 +119,6 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLForm
           )}
         />
 
-        {/* Password */}
         <FormField
           control={form.control}
           name="password"
@@ -138,7 +131,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLForm
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
                     {...field}
-                    className="pr-10" // space for icon
+                    className="pr-10"
                   />
                   <span
                     onClick={() => setShowPassword((prev) => !prev)}
@@ -153,7 +146,6 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLForm
           )}
         />
 
-        {/* Submit */}
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Login'}
         </Button>
