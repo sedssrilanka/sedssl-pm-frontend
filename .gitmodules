@@ -1,0 +1,3 @@
+[submodule "src/transactionals"]
+	path = src/transactionals
+	url = https://github.com/sedssrilanka/sedssl-pm-email-templates.git
