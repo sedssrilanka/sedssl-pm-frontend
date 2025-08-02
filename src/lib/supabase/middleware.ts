@@ -3,6 +3,11 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { hasEnvVars } from '../utils';
 
 export async function updateSession(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  if (pathname === '/members/register/send-email') {
+    return NextResponse.next();
+  }
   let supabaseResponse = NextResponse.next({ request });
 
   if (!hasEnvVars) return supabaseResponse;
@@ -28,8 +33,6 @@ export async function updateSession(request: NextRequest) {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-
-    const pathname = request.nextUrl.pathname;
 
     const isAuthRoute =
       pathname.startsWith('/members/login') || pathname.startsWith('/members/auth');
